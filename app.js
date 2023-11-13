@@ -14,13 +14,20 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
     console.log('Klien terhubung ke WebSocket.');
+
+    var botToken = '6628164620:AAE9iA2aDBpzIgl2LpDZG3hBh-IL9oGq8mI'
   
     const fetchDataFromAPI = async () => {
         try {
-            const response = await axios.get('URL_API_ANDA');
+            const response = await axios.get(`https://api.telegram.org/bot${botToken}/getUpdates`);
             const data = response.data;
 
-            console.log(data);
+            const result = data['result'];
+
+            result.forEach(item => {
+                console.log(item);
+            });
+            
             // await db.promise().query('INSERT INTO data_api (data) VALUES (?)', [JSON.stringify(data)]);
 
             // Emit data ke klien yang terhubung
@@ -33,7 +40,7 @@ io.on('connection', (socket) => {
      // Panggil fungsi untuk mengambil data dari API pada interval tertentu
     const interval = setInterval(() => {
         fetchDataFromAPI();
-    }, 2000);
+    }, 4000);
   
     socket.on('disconnect', () => {
       console.log('Klien terputus dari WebSocket.');

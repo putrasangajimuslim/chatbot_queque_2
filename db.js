@@ -13,10 +13,10 @@
 const mysql = require('mysql2');
 
 const db = mysql.createConnection({
-  host: '127.0.0.1',
+  host: 'localhost',
   user: 'root',
   password: '',
-  database: 'app_chat_bot'
+  database: 'chatbot_telegram'
 });
 
 db.connect(err => {
